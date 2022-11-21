@@ -1,0 +1,37 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.wwps.she.ObjectWeb",
+  "ComponentVersion": "1.2.7",
+  "ComponentType": "aws.greengrass.generic",
+  "ComponentDescription": "A component that runs a web server that serves a web application to show the object detection demo.",
+  "ComponentPublisher": "WWPS SHE Demo",
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Setenv": {
+          "API_ENDPOINT": "http://host.docker.internal:8000",
+          "CAMERA_URL": "http://<CAMERA-IP>/cgi-bin/mjpg/video.cgi?channel=1&subtype=1"
+        },
+        "Install": {
+          "Script": "docker load -i {artifacts:path}/snowdetectorweb.tar && cp {artifacts:path}/nginx.conf /var/tmp/nginx.conf && chmod a+rw /var/tmp/nginx.conf && sed -i \"s+API_ENDPOINT+$API_ENDPOINT+g\" /var/tmp/nginx.conf && sed -i \"s+CAMERA_URL+${CAMERA_URL//&/\\\\&}+g\" /var/tmp/nginx.conf",
+          "Timeout": "600"
+        },
+        "Run": {
+          "Script": "docker run --rm -p 80:80 -p 443:443 --add-host=host.docker.internal:host-gateway -v /var/tmp/nginx.conf:/etc/nginx/nginx.conf:ro snowdetectorweb"
+        }
+      },
+      "Artifacts": [
+        {
+          "Uri": "s3://<my_S3_bucket>/snowdetectorweb.tar"
+        },
+        {
+          "Uri": "s3://<my_S3_bucket>/nginx.conf"
+        }
+      ]
+    }
+  ],
+  "Lifecycle": {}
+}

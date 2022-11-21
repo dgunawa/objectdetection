@@ -1,0 +1,21 @@
+{
+    "targetArn": "arn:aws:iot:<region>:<aws_account_id>:thinggroup/<thing_group_name>",
+    "deploymentName": "she-demo-web",
+    "components": {
+      "com.wwps.she.ObjectWeb": {
+        "componentVersion": "1.2.7",
+        "configurationUpdate": {}
+      }
+    },
+    "deploymentPolicies": {
+      "componentUpdatePolicy": {
+        "action": "NOTIFY_COMPONENTS",
+        "timeoutInSeconds": 30
+      },
+      "configurationValidationPolicy": {
+        "timeoutInSeconds": 60
+      },
+      "failureHandlingPolicy": "ROLLBACK"
+    }
+  }
+  

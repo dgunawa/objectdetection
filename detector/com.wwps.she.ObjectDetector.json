@@ -1,0 +1,30 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.wwps.she.ObjectDetector",
+  "ComponentVersion": "1.1.0",
+  "ComponentType": "aws.greengrass.generic",
+  "ComponentDescription": "A component that runs a Docker container from an image in an S3 bucket providing an API to detect objects.",
+  "ComponentPublisher": "WWPS SHE Demo",
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Install": {
+          "Script": "docker load -i {artifacts:path}/snowdetector.tar",
+          "Timeout": "600"
+        },
+        "Run": {
+          "Script": "docker run --rm --env API_PORT=8000 -p 8000:8000 snowdetector"
+        }
+      },
+      "Artifacts": [
+        {
+          "Uri": "s3://<my_S3_bucket>/snowdetector.tar"
+        }
+      ]
+    }
+  ],
+  "Lifecycle": {}
+}
