@@ -1,0 +1,6 @@
+assets
+
+# Intellij
+.DS_Store
+.idea/*
+*.iml

@@ -20,7 +20,7 @@
           "Timeout": "600"
         },
         "Run": {
-          "Script": "docker run --rm -p 80:80 -p 443:443 --add-host=host.docker.internal:host-gateway -v /var/tmp/nginx.conf:/etc/nginx/nginx.conf:ro snowdetectorweb"
+          "Script": "docker run -d -p 80:80 -p 443:443 --add-host=host.docker.internal:host-gateway -v /var/tmp/nginx.conf:/etc/nginx/nginx.conf:ro snowdetectorweb && docker run -d --env API_PORT=8000 -p 8000:8000 snowdetector"
         }
       },
       "Artifacts": [
