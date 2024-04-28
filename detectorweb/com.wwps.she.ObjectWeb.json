@@ -16,7 +16,7 @@
           "CAMERA_URL": "http://<CAMERA-IP>/cgi-bin/mjpg/video.cgi?channel=1&subtype=1"
         },
         "Install": {
-          "Script": "docker load -i {artifacts:path}/snowdetectorweb.tar && cp {artifacts:path}/nginx.conf /var/tmp/nginx.conf && chmod a+rw /var/tmp/nginx.conf && sed -i \"s+API_ENDPOINT+$API_ENDPOINT+g\" /var/tmp/nginx.conf && sed -i \"s+CAMERA_URL+${CAMERA_URL//&/\\\\&}+g\" /var/tmp/nginx.conf",
+          "Script": "docker load -i {artifacts:path}/snowdetectorweb.tar && docker load -i {artifacts:path}/snowdetector.tar && cp {artifacts:path}/nginx.conf /var/tmp/nginx.conf && chmod a+rw /var/tmp/nginx.conf && sed -i \"s+API_ENDPOINT+$API_ENDPOINT+g\" /var/tmp/nginx.conf && sed -i \"s+CAMERA_URL+${CAMERA_URL//&/\\\\&}+g\" /var/tmp/nginx.conf",
           "Timeout": "600"
         },
         "Run": {
@@ -26,6 +26,9 @@
       "Artifacts": [
         {
           "Uri": "s3://<my_S3_bucket>/snowdetectorweb.tar"
+        },
+        {
+          "Uri": "s3://<my_S3_bucket>/snowdetector.tar"
         },
         {
           "Uri": "s3://<my_S3_bucket>/nginx.conf"
