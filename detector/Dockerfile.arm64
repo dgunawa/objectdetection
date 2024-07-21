@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM arm64v8/python:3.9-slim-bullseye
 
 COPY yolov5 ./yolov5
 COPY \
